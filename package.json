@@ -2,11 +2,21 @@
     "name": "@tsamantanis/node-windy-api",
     "version": "1.0.0",
     "description": "Nodejs API for Windyty point forecast https://api.windy.com/point-forecast",
-    "main": "src/index.tsx",
+    "main": "src/index.ts",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1"
     },
-    "keywords": ["Windy", "Forecast", "API"],
+    "keywords": [
+        "Windy",
+        "Forecast",
+        "API"
+    ],
     "author": "Philippos Tsamantanis",
-    "license": "ISC"
+    "license": "ISC",
+    "publishConfig": {
+        "access": "public"
+    },
+    "devDependencies": {
+        "typescript": "^4.1.5"
+    }
 }

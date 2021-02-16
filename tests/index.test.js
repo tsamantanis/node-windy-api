@@ -38,13 +38,18 @@ require('dotenv').config();
 var WindyAPI = require('../src/');
 var testStandard = function () {
     return __awaiter(this, void 0, void 0, function () {
-        var res;
+        var res, data;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, WindyAPI.standard(49.809, 16.787, process.env.WINDY_API_KEY)];
+                case 0: return [4 /*yield*/, WindyAPI.standard(49.809, 16.787, process.env.WINDY_API_KEY)
+                    // validate with test
+                ];
                 case 1:
                     res = _a.sent();
-                    console.log(res);
+                    return [4 /*yield*/, WindyAPI.beautify(res, 'E M f, Y', 'c', 'kts')];
+                case 2:
+                    data = _a.sent();
+                    console.log(data);
                     return [2 /*return*/];
             }
         });

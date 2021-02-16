@@ -36,9 +36,10 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.standard = exports.get = void 0;
+exports.beautify = exports.standard = exports.get = void 0;
 // https://api.windy.com/api/point-forecast/v2
 var fetch = require("node-fetch");
+var BetterDate = require("@tsamantanis/date-lib");
 // params
 function get(lat, //  latitude
 lon, // longitude
@@ -91,10 +92,9 @@ apiKey) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 2, , 3]);
-                    return [4 /*yield*/, get(lat, lon, "gfs", ["temp", "wind", "rh"], ["surface"], apiKey)]; // await fetch(path, options)
+                    return [4 /*yield*/, get(lat, lon, "gfs", ["temp", "wind", "rh"], ["surface"], apiKey)];
                 case 1:
-                    data = _a.sent() // await fetch(path, options)
-                    ;
+                    data = _a.sent();
                     return [2 /*return*/, data];
                 case 2:
                     error_1 = _a.sent();
@@ -105,3 +105,74 @@ apiKey) {
     });
 }
 exports.standard = standard;
+function beautify(data, time, // Better date .format() parameter
+temp, // temp units ['K', 'C', 'F']
+wind // wind speed units ['m/s', 'kts', 'bft']
+) {
+    if (time === void 0) { time = 'M D Y'; }
+    if (temp === void 0) { temp = 'K'; }
+    if (wind === void 0) { wind = 'm/s'; }
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            try {
+                // dates
+                data.ts = data.ts.map(function (ts) { return new BetterDate(ts).format(time); });
+                // temp
+                if (temp.toUpperCase() === 'C')
+                    data['temp-surface'] = data['temp-surface'].map(function (temp) { return (temp - 273.15).toFixed(2); });
+                else if (temp.toUpperCase() === 'F')
+                    data['temp-surface'] = data['temp-surface'].map(function (temp) { return ((temp - 273.15) * 1.8 + 32).toFixed(2); });
+                else
+                    data['temp-surface'] = data['temp-surface'].map(function (temp) { return temp.toFixed(2); });
+                // wind
+                if (wind.toLowerCase() === 'kts') {
+                    // convert to knots
+                    data['wind_u-surface'] = data['wind_u-surface'].map(function (wind) { return (wind * 1.9438444924406).toFixed(0); });
+                    data['wind_v-surface'] = data['wind_v-surface'].map(function (wind) { return (wind * 1.9438444924406).toFixed(0); });
+                }
+                if (wind.toLowerCase() === 'bft') {
+                    // convert to beaufort
+                    data['wind_u-surface'] = data['wind_u-surface'].map(function (wind) { return mpsToBft(wind); });
+                    data['wind_v-surface'] = data['wind_v-surface'].map(function (wind) { return mpsToBft(wind); });
+                }
+                // humidity
+                data['rh-surface'] = data['rh-surface'].map(function (rh) { return parseInt(rh).toString() + '%'; });
+                return [2 /*return*/, data];
+            }
+            catch (error) {
+            }
+            return [2 /*return*/];
+        });
+    });
+}
+exports.beautify = beautify;
+function mpsToBft(mps) {
+    var res = 0;
+    if (Math.abs(mps) < 0.3)
+        res = 0;
+    else if (Math.abs(mps) < 1.5)
+        res = 1;
+    else if (Math.abs(mps) < 3.3)
+        res = 2;
+    else if (Math.abs(mps) < 5.5)
+        res = 3;
+    else if (Math.abs(mps) < 8.0)
+        res = 4;
+    else if (Math.abs(mps) < 10.8)
+        res = 5;
+    else if (Math.abs(mps) < 13.9)
+        res = 6;
+    else if (Math.abs(mps) < 17.2)
+        res = 7;
+    else if (Math.abs(mps) < 20.7)
+        res = 8;
+    else if (Math.abs(mps) < 24.5)
+        res = 9;
+    else if (Math.abs(mps) < 28.4)
+        res = 10;
+    else if (Math.abs(mps) < 32.6)
+        res = 11;
+    else
+        res = 12;
+    return mps < 0 ? 0 - res : res;
+}

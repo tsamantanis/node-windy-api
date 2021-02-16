@@ -38,14 +38,14 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 exports.__esModule = true;
 exports.standard = exports.get = void 0;
 // https://api.windy.com/api/point-forecast/v2
-require('dotenv').config();
 var fetch = require("node-fetch");
 // params
 function get(lat, //  latitude
 lon, // longitude
 model, // forecast model ['Arome', 'IconEu', 'GFS', 'Wavewatch', 'namConus', 'namHawaii', 'namAlaska', 'geos5']
 parameters, // https://api.windy.com/point-forecast/docs#parameters
-levels) {
+levels, // geopotential values ['surface', '1000h', '950h', '925h', '900h', '850h', '800h', '700h', '600h', '500h', '400h', '300h', '200h', '150h']
+apiKey) {
     return __awaiter(this, void 0, void 0, function () {
         var path, options, data, err_1;
         return __generator(this, function (_a) {
@@ -61,7 +61,7 @@ levels) {
                             model: model,
                             parameters: parameters,
                             levels: levels,
-                            key: process.env.WINDY_API_KEY
+                            key: apiKey
                         }),
                         headers: {
                             "Content-type": "application/json; charset=UTF-8"
@@ -70,7 +70,7 @@ levels) {
                     return [4 /*yield*/, fetch(path, options)];
                 case 1:
                     data = _a.sent();
-                    return [2 /*return*/, data];
+                    return [2 /*return*/, data.json()];
                 case 2:
                     err_1 = _a.sent();
                     return [2 /*return*/, err_1];
@@ -83,7 +83,8 @@ exports.get = get;
 ;
 // default forecasting route
 function standard(lat, //  latitude
-lon) {
+lon, // longitude
+apiKey) {
     return __awaiter(this, void 0, void 0, function () {
         var path, options, data, error_1;
         return __generator(this, function (_a) {
@@ -99,7 +100,7 @@ lon) {
                             model: "gfs",
                             parameters: ["temp", "wind", "rh"],
                             levels: ["surface"],
-                            key: process.env.WINDY_API_KEY
+                            key: apiKey
                         }),
                         headers: {
                             "Content-type": "application/json; charset=UTF-8"
@@ -111,8 +112,7 @@ lon) {
                     return [2 /*return*/, data.json()];
                 case 2:
                     error_1 = _a.sent();
-                    console.log("Error", error_1);
-                    return [3 /*break*/, 3];
+                    return [2 /*return*/, error_1];
                 case 3: return [2 /*return*/];
             }
         });

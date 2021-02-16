@@ -1,5 +1,4 @@
 // https://api.windy.com/api/point-forecast/v2
-require('dotenv').config()
 const fetch = require("node-fetch");
 // params
 
@@ -9,7 +8,7 @@ export async function get<T>(
     model: string, // forecast model ['Arome', 'IconEu', 'GFS', 'Wavewatch', 'namConus', 'namHawaii', 'namAlaska', 'geos5']
     parameters: Array<string>, // https://api.windy.com/point-forecast/docs#parameters
     levels: Array<string>, // geopotential values ['surface', '1000h', '950h', '925h', '900h', '850h', '800h', '700h', '600h', '500h', '400h', '300h', '200h', '150h']
-    // key: string
+    apiKey: string
 ) {
     try {
         const path = "https://api.windy.com/api/point-forecast/v2"
@@ -21,14 +20,14 @@ export async function get<T>(
                 model: model,
                 parameters: parameters,
                 levels: levels,
-                key: process.env.WINDY_API_KEY
+                key: apiKey
             }),
             headers: {
                 "Content-type": "application/json; charset=UTF-8"
             }
         }
         const data = await fetch(path, options)
-        return data
+        return data.json()
     } catch (err) {
         return err;
     }
@@ -38,6 +37,7 @@ export async function get<T>(
 export async function standard<T>(
     lat: number, //  latitude
     lon: number, // longitude
+    apiKey: string
 ) {
     try {
         const path = "https://api.windy.com/api/point-forecast/v2"
@@ -49,7 +49,7 @@ export async function standard<T>(
                 model: "gfs",
                 parameters: ["temp", "wind", "rh"],
                 levels: ["surface"],
-                key: process.env.WINDY_API_KEY
+                key: apiKey
             }),
             headers: {
                 "Content-type": "application/json; charset=UTF-8"
@@ -58,6 +58,6 @@ export async function standard<T>(
         const data = await fetch(path, options)
         return data.json()
     } catch(error) {
-        console.log("Error", error)
+        return error
     }
 }

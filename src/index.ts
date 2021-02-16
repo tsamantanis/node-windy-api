@@ -40,23 +40,15 @@ export async function standard<T>(
     apiKey: string
 ) {
     try {
-        const path = "https://api.windy.com/api/point-forecast/v2"
-        const options = {
-            method: "post",
-            body: JSON.stringify({
-                lat: lat,
-                lon: lon,
-                model: "gfs",
-                parameters: ["temp", "wind", "rh"],
-                levels: ["surface"],
-                key: apiKey
-            }),
-            headers: {
-                "Content-type": "application/json; charset=UTF-8"
-            }
-        }
-        const data = await fetch(path, options)
-        return data.json()
+        const data = await get(
+            lat,
+            lon,
+            "gfs",
+            ["temp", "wind", "rh"],
+            ["surface"],
+            apiKey
+        )
+        return data
     } catch(error) {
         return error
     }

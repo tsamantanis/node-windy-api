@@ -86,30 +86,16 @@ function standard(lat, //  latitude
 lon, // longitude
 apiKey) {
     return __awaiter(this, void 0, void 0, function () {
-        var path, options, data, error_1;
+        var data, error_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 2, , 3]);
-                    path = "https://api.windy.com/api/point-forecast/v2";
-                    options = {
-                        method: "post",
-                        body: JSON.stringify({
-                            lat: lat,
-                            lon: lon,
-                            model: "gfs",
-                            parameters: ["temp", "wind", "rh"],
-                            levels: ["surface"],
-                            key: apiKey
-                        }),
-                        headers: {
-                            "Content-type": "application/json; charset=UTF-8"
-                        }
-                    };
-                    return [4 /*yield*/, fetch(path, options)];
+                    return [4 /*yield*/, get(lat, lon, "gfs", ["temp", "wind", "rh"], ["surface"], apiKey)]; // await fetch(path, options)
                 case 1:
-                    data = _a.sent();
-                    return [2 /*return*/, data.json()];
+                    data = _a.sent() // await fetch(path, options)
+                    ;
+                    return [2 /*return*/, data];
                 case 2:
                     error_1 = _a.sent();
                     return [2 /*return*/, error_1];

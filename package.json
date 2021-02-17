@@ -1,6 +1,6 @@
 {
     "name": "@tsamantanis/node-windy-api",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Nodejs API for Windyty point forecast https://api.windy.com/point-forecast",
     "main": "src/index.ts",
     "scripts": {

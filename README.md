@@ -33,7 +33,6 @@ const testStandard = async function () {
     const res = await WindyAPI.standard(49.809, 16.787, "YOUR_API_KEY")
     // res contains json object
 }
-
 ```
 If you wish to receive the resulting object in an easier to read and ready to present format you can also use the beautify method as follows
 ```

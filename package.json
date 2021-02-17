@@ -4,7 +4,7 @@
     "description": "Nodejs API for Windyty point forecast https://api.windy.com/point-forecast",
     "main": "src/index.ts",
     "scripts": {
-        "test": "tsc */*.ts && node tests/index.test.js"
+        "test": "mocha -r ts-node/register tests/*.test.ts"
     },
     "keywords": [
         "Windy",
@@ -17,6 +17,11 @@
         "access": "public"
     },
     "devDependencies": {
+        "@types/chai": "^4.2.15",
+        "@types/mocha": "^8.2.0",
+        "chai": "^4.3.0",
+        "mocha": "^8.3.0",
+        "ts-node": "^9.1.1",
         "typescript": "^4.1.5"
     },
     "dependencies": {

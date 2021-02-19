@@ -3,6 +3,7 @@
     "version": "1.0.1",
     "description": "Nodejs API for Windyty point forecast https://api.windy.com/point-forecast",
     "main": "src/index.ts",
+    "types": "esm/index.d.ts",
     "scripts": {
         "test": "mocha -r ts-node/register tests/*.test.ts"
     },
@@ -21,7 +22,11 @@
         "@types/mocha": "^8.2.0",
         "chai": "^4.3.0",
         "mocha": "^8.3.0",
+        "rollup": "^2.39.0",
+        "rollup-plugin-terser": "^7.0.2",
+        "rollup-plugin-typescript": "^1.0.1",
         "ts-node": "^9.1.1",
+        "tslib": "^2.1.0",
         "typescript": "^4.1.5"
     },
     "dependencies": {

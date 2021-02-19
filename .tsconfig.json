@@ -1,17 +1,17 @@
 {
     "compilerOptions": {
-        "noEmit": true,
-        "target": "esnext",
-        "module": "commonjs",
-        "sourceMap": true,
         "declaration": true,
-        "strict": true,
-        "noUnusedLocals": true,
-        "jsx": "react",
-        "removeComments": true,
+        "declarationDir": "./esm",
+        "outDir": "./esm",
+        "module": "es6",
+        "target": "es5",
+        "noImplicitAny": true,
+        "moduleResolution": "node"
     },
     "include": [
-        "src",
-        "test"
+        "src/**/*",
+    ],
+    "exclude": [
+        "node_modules"
     ]
 }

@@ -19,7 +19,9 @@
     "author": "Philippos Tsamantanis",
     "license": "ISC",
     "publishConfig": {
-        "access": "public"
+      "access": "public",
+      "cache": "~/.npm",
+      "registry": "https://npm.pkg.github.com"
     },
     "devDependencies": {
         "@types/chai": "^4.2.15",

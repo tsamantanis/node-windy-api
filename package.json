@@ -1,11 +1,15 @@
 {
     "name": "@tsamantanis/node-windy-api",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "Nodejs API for Windyty point forecast https://api.windy.com/point-forecast",
-    "main": "src/index.ts",
+    "main": "umd/windyAPI.js",
     "types": "esm/index.d.ts",
+    "files": [
+      "umd/*"
+    ],
     "scripts": {
-        "test": "mocha -r ts-node/register tests/*.test.ts"
+        "test": "mocha -r ts-node/register tests/*.test.ts",
+        "prepare": "rollup --config"
     },
     "keywords": [
         "Windy",
